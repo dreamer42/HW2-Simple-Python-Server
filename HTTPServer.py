@@ -8,7 +8,7 @@ from os import curdir, sep
 
 #Define some variables to be used in the execution of the program
 HOST_NAME = '' # can be 'localhost' or if you change your hosts.txt file, what happens?? ;)
-PORT_NUMBER = 9001 #If you kill the server un-gracefully you may need to change this to an open socket.
+PORT_NUMBER = 9000 #If you kill the server un-gracefully you may need to change this to an open socket.
 
 class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 #MyHandler class implements standard standard HTTP menthods
@@ -21,7 +21,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         #Respond to a GET request.
         try:
             if self.path.endswith((".html",".htm")):
-                f = open(curdir + sep + self.path) #self.path has /index.html
+                f = open(curdir + sep + self.path, 'rb') #self.path has /index.html
                 self.send_response(200)
                 self.send_header("Content-type", "text/html")
                 self.end_headers()
@@ -39,12 +39,32 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 return
                 
             if self.path.endswith(".gif"):
-                # IMPLEMENT THIS
+                f = open(curdir + sep + self.path, 'rb')
+		self.send_response(200)
+		self.send_header("Content-type", "image/gif")
+		self.end_headers()
+		self.wfile.write(f.read())
+		f.close()
                 return
                 
             if self.path.endswith(".jpg"):
-                # IMPLEMENT THIS
+                f = open(curdir + sep + self.path, 'rb')
+		self.send_response(200)
+		self.send_header("Content-type", "image/jpeg")
+		self.end_headers()
+		self.wfile.write(f.read())
+		f.close()
                 return
+
+            if self.path == "/":
+                f = open(curdir + sep + "index.html", 'rb')
+		self.send_response(200)
+		self.send_header("Content-type", "text/html")
+		self.end_headers()
+		self.wfile.write(f.read())
+		f.close()
+                return
+                
         except IOError:
             self.send_error(404,'File not found: %self' % self.path)
             

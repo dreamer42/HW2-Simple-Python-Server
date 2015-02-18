@@ -1,0 +1,20 @@
+1)
+Run the server as it is and notice what is written to the command window as you click on the links. What is going on here?
+
+The browser is sending a request on port 9000.  Local python server is listening on that port.  It take the request and processes it based on the logic in the server file.  HTML is handled one way, TIME another, and soon graphics will be handled.  It loads the requested file and serves it up.  If in the instance of the last request, the file doesn't exist, we get to see the "except IOError" section of code used and a 404 error is displayed on browser.
+
+C:\data\Education\St. Thomas\SEIS752\HW2-Simple-Python-Server>HTTPServer.py
+Mon Feb 16 10:58:54 2015 Server Starts - :9000
+127.0.0.1 - - [16/Feb/2015 10:59:08] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [16/Feb/2015 10:59:18] "GET /whattimeisit.time HTTP/1.1" 200 -
+127.0.0.1 - - [16/Feb/2015 10:59:29] "GET /ping.html HTTP/1.1" 200 -
+127.0.0.1 - - [16/Feb/2015 10:59:30] "GET /pong.html HTTP/1.1" 200 -
+127.0.0.1 - - [16/Feb/2015 10:59:31] code 404, message File not found: /klunk.htmlelf
+127.0.0.1 - - [16/Feb/2015 10:59:31] "GET /klunk.html HTTP/1.1" 404 -
+
+
+
+2) d.
+With images working on your pages, note what is happening in the command window as you click from page to page.
+
+Each image has a get, so multiple requests for each page.
